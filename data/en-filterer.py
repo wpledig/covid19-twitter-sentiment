@@ -1,8 +1,8 @@
 import csv
 import linecache
 
-input_dataset = "2021-02-15_clean-dataset.tsv"
-output_dataset = "2021-02-15_clean-dataset-filtered.tsv"
+input_dataset = "full_dataset-clean.tsv"
+output_dataset = "full_dataset-clean-filtered.tsv"
 
 filtered_tw = list()
 current_line = 1
