@@ -14,7 +14,6 @@ num_dailies = 0
 contents = repo.get_contents("dailies")
 for daily_folder in contents:
     if daily_folder.type == 'dir':
-        #
         sub_contents = repo.get_contents(daily_folder.path)
         for content_file in sub_contents:
             if content_file.name.endswith("terms.csv"):
