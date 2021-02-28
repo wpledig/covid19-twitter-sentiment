@@ -1,0 +1,46 @@
+import tweepy
+import json
+import sys
+import pandas as pd
+from time import sleep
+
+# Eliminates annoying Pandas warning
+pd.set_option('mode.chained_assignment', None)
+
+with open('../data/api_keys.json') as f:
+    keys = json.load(f)
+
+auth = tweepy.OAuthHandler(keys['consumer_key'], keys['consumer_secret'])
+auth.set_access_token(keys['access_token'], keys['access_token_secret'])
+api = tweepy.API(auth, wait_on_rate_limit=True, retry_delay=60, retry_count=5,
+                 retry_errors=set([401, 404, 500, 503]), wait_on_rate_limit_notify=True)
+
+if api.verify_credentials() == False:
+    print("Your Twitter api credentials are invalid")
+    sys.exit()
+else:
+    print("Your Twitter api credentials are valid.")
+
+
+df = pd.read_csv("location_id_counts.csv")
+df["name"] = ""
+df["full_name"] = ""
+df["place_type"] = ""
+df["lng"] = 0.0
+df["lat"] = 0.0
+
+for i in range(df.shape[0]):
+    location_id = df["location_id"][i]
+    geo_data = api.geo_id(location_id)
+    df["name"][i] = geo_data.name
+    df["full_name"][i] = geo_data.full_name
+    df["place_type"][i] = geo_data.place_type
+    df["lat"][i] = geo_data.centroid[1]
+    df["lng"][i] = geo_data.centroid[0]
+    sleep(2)
+    if i % 100 == 0:
+        print("Completed ", i)
+        # sleep(10)
+
+
+df.to_csv("location_data.csv", index=False)
