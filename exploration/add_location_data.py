@@ -30,6 +30,9 @@ df["lng"] = 0.0
 df["lat"] = 0.0
 
 for i in range(df.shape[0]):
+    # Stop collecting data for locations under 1 instance
+    if df["count"][i] <= 1 or df["lng"][i] != 0.0:
+        continue
     location_id = df["location_id"][i]
     geo_data = api.geo_id(location_id)
     df["name"][i] = geo_data.name
@@ -37,10 +40,11 @@ for i in range(df.shape[0]):
     df["place_type"][i] = geo_data.place_type
     df["lat"][i] = geo_data.centroid[1]
     df["lng"][i] = geo_data.centroid[0]
-    sleep(2)
+    sleep(3)
+    if i % 10 == 0:
+        df.to_csv("location_data.csv", index=False)
     if i % 100 == 0:
         print("Completed ", i)
         # sleep(10)
-
 
 df.to_csv("location_data.csv", index=False)
