@@ -22,16 +22,16 @@ else:
     print("Your Twitter api credentials are valid.")
 
 
-df = pd.read_csv("location_id_counts.csv")
-df["name"] = ""
-df["full_name"] = ""
-df["place_type"] = ""
-df["lng"] = 0.0
-df["lat"] = 0.0
+df = pd.read_csv("location_data.csv")
+# df["name"] = ""
+# df["full_name"] = ""
+# df["place_type"] = ""
+# df["lng"] = 0.0
+# df["lat"] = 0.0
 
 for i in range(df.shape[0]):
     # Stop collecting data for locations under 1 instance
-    if df["count"][i] <= 1 or df["lng"][i] != 0.0:
+    if df["count"][i] <= 5 or df["lng"][i] != 0.0:
         continue
     location_id = df["location_id"][i]
     geo_data = api.geo_id(location_id)
@@ -40,8 +40,8 @@ for i in range(df.shape[0]):
     df["place_type"][i] = geo_data.place_type
     df["lat"][i] = geo_data.centroid[1]
     df["lng"][i] = geo_data.centroid[0]
-    sleep(3)
-    if i % 10 == 0:
+    sleep(7)
+    if i % 5 == 0:
         df.to_csv("location_data.csv", index=False)
     if i % 100 == 0:
         print("Completed ", i)
