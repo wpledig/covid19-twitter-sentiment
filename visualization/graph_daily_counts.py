@@ -16,7 +16,7 @@ plt.figure(figsize=(10, 6))
 mean = running_mean(df['count'].to_numpy(), 7)
 
 plt.plot(df['day'], df['count'])
-plt.plot(df['day'][6:], mean, color='red', label='Weekly Average')
+plt.plot(df['day'][3:-3], mean, color='red', label='Weekly Average')
 
 plt.legend()
 plt.xlabel('Date')

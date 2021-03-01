@@ -40,7 +40,7 @@ for i in range(df.shape[0]):
     df["place_type"][i] = geo_data.place_type
     df["lat"][i] = geo_data.centroid[1]
     df["lng"][i] = geo_data.centroid[0]
-    sleep(7)
+    sleep(9)
     if i % 5 == 0:
         df.to_csv("location_data.csv", index=False)
     if i % 100 == 0:
