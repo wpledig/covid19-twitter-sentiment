@@ -2,7 +2,7 @@ import json
 from collections import defaultdict
 import pandas as pd
 
-location_counts = defaultdict(int)
+location_counts = {}
 
 dataset = "../data/complete_en_US"
 
@@ -16,7 +16,16 @@ with open(dataset) as inputfile:
         if jline['place'] is None:
             continue
         location_id = jline['place']['id']
-        location_counts[location_id] += 1
+        place = jline['place']
+        if location_id not in location_counts.keys():
+            location_counts[location_id] = {
+                'name': place['name'],
+                'full_name': place['full_name'],
+                'place_type': place['place_type'],
+                'count': 0
+            }
+
+        location_counts[location_id]['count'] += 1
         # print(json.dumps(, indent=4))
 
         num_counted += 1
@@ -24,7 +33,8 @@ with open(dataset) as inputfile:
             print("Counted ", num_counted)
 
 df = pd.DataFrame.from_dict(location_counts, orient='index').reset_index()
-df.columns = ['location_id', 'count']
+# df.columns = ['location_id', 'count']
+print(df)
 df = df.sort_values(by='count', ascending=False)
-df.to_csv("location_id_counts.csv", index=False)
+df.to_csv("locations_by_counts.csv", index=False)
 
