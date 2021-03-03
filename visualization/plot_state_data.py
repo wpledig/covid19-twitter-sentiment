@@ -50,5 +50,6 @@ plt.title('Number of Tweets about COVID-19 per State')
 img = AxesImage(states["count"], cmap, norm=norm)
 plt.colorbar(img)
 
+plt.savefig('state_counts.png')
 plt.show()
 

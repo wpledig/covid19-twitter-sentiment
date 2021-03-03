@@ -25,4 +25,5 @@ plt.title('Number of English Tweets in the US about COVID-19 per Day')
 
 # plt.xticks(rotation='vertical')
 # plt.locator_params(axis='x', nbins=12)
+plt.savefig('daily_counts.png')
 plt.show()
