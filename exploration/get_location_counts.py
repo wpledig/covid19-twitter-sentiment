@@ -26,7 +26,7 @@ with open(dataset) as inputfile:
             }
 
         location_counts[location_id]['count'] += 1
-        # print(json.dumps(, indent=4))
+        print(json.dumps(jline, indent=4))
 
         num_counted += 1
         if num_counted % 1000 == 0:
