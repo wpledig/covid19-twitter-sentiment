@@ -59,6 +59,8 @@ img = AxesImage(states["count_by_pop"], cmap, norm=norm)
 cb = plt.colorbar(img)
 # cb.set_label('Number of tweets per million residents')
 
+print(states[["name", "count", "count_by_pop"]])
+
 plt.savefig('state_counts_by_pop.png')
 plt.show()
 
