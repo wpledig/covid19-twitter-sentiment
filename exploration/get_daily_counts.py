@@ -3,9 +3,13 @@ from collections import defaultdict
 import pandas as pd
 import datetime
 
+"""
+Calculates the number of tweets per day and stores in a CSV
+"""
+
 daily_counts = defaultdict(int)
 
-dataset = "../data/complete_en_US"
+dataset = "../data-collection/data/complete_en_US"
 
 num_counted = 0
 

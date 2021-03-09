@@ -1,6 +1,9 @@
 import matplotlib.pyplot as plt
 import pandas as pd
 
+"""
+Graphs the three n-grams plots (but doesn't save rn)
+"""
 
 def make_bar(df, key, end):
     df = df[:end]
@@ -16,9 +19,9 @@ def make_bar(df, key, end):
     plt.show()
 
 
-terms_folder = "../data/all_term_counts_clean.csv"
-bigrams_folder = "../data/all_bigram_counts_clean.csv"
-trigrams_folder = "../data/all_trigram_counts_clean.csv"
+terms_folder = "../data-collection/data/all_term_counts_clean.csv"
+bigrams_folder = "../data-collection/data/all_bigram_counts_clean.csv"
+trigrams_folder = "../data-collection/data/all_trigram_counts_clean.csv"
 
 
 o_df = pd.read_csv(terms_folder)

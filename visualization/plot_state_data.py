@@ -7,8 +7,13 @@ from matplotlib.colorbar import ColorbarBase
 from mpl_toolkits.basemap import Basemap
 from matplotlib.patches import Polygon
 
+"""
+Plots tweets by state
+"""
+
+
 input_file = "../exploration/location_data.csv"
-pop_file = "../data/nst-est2020.csv"
+pop_file = "../data-collection/data/nst-est2020.csv"
 
 pop_df = pd.read_csv(pop_file)
 pop_df = pop_df[["NAME", "POPESTIMATE2020"]]
@@ -37,7 +42,7 @@ color_list = []
 for shape_dict in m.states_info:
     cur_name = shape_dict['NAME']
     state_names.append(cur_name)
-    # Don't have data for PR, so skip
+    # Don't have data-collection for PR, so skip
     if cur_name == 'Puerto Rico':
         color_list.append([0, 0, 0, 0])
         continue

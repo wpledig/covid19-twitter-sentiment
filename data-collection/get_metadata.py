@@ -1,3 +1,9 @@
+
+"""
+i didn't write this file, but it's used to hydrate a csv of tweets via command line arguments
+"""
+
+
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 #

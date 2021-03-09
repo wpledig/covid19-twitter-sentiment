@@ -4,10 +4,17 @@ import sys
 import pandas as pd
 from time import sleep
 
+"""
+Used after get_location_counts. Adds latitude and longitude to pre-existing location data.
+This can take a VERY long time to run, so modifies the location_data.csv file in place
+This honestly will probably break if location_data doesn't exist, i'll fix that eventually
+"""
+
+
 # Eliminates annoying Pandas warning
 pd.set_option('mode.chained_assignment', None)
 
-with open('../data/api_keys.json') as f:
+with open('../data-collection/api_keys.json') as f:
     keys = json.load(f)
 
 auth = tweepy.OAuthHandler(keys['consumer_key'], keys['consumer_secret'])
@@ -30,7 +37,7 @@ df = pd.read_csv("location_data.csv")
 # df["lat"] = 0.0
 
 for i in range(df.shape[0]):
-    # Stop collecting data for locations under 1 instance
+    # Stop collecting data-collection for locations under 1 instance
     if df["count"][i] <= 5 or df["lng"][i] != 0.0:
         continue
     location_id = df["location_id"][i]

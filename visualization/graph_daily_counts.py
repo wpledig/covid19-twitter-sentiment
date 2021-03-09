@@ -3,6 +3,11 @@ import datetime
 import numpy as np
 import matplotlib.pyplot as plt
 
+"""
+Graphs number of tweets per day + weekly running average
+"""
+
+
 input_file = "../exploration/days_by_counts.csv"
 
 

@@ -2,8 +2,11 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import wordcloud
 
+"""
+Creates wordcloud
+"""
 
-terms_folder = "../data/all_term_counts_clean.csv"
+terms_folder = "../data-collection/data/all_term_counts_clean.csv"
 df = pd.read_csv(terms_folder)
 
 freq_dict = df.set_index('term')['counts'].to_dict()

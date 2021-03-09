@@ -4,7 +4,11 @@ import pandas as pd
 
 location_counts = {}
 
-dataset = "../data/complete_en_US"
+"""
+Computes the number of tweets by location_id, and stores that in a CSV
+"""
+
+dataset = "../data-collection/data/complete_en_US"
 
 num_counted = 0
 
@@ -26,7 +30,6 @@ with open(dataset) as inputfile:
             }
 
         location_counts[location_id]['count'] += 1
-        print(json.dumps(jline, indent=4))
 
         num_counted += 1
         if num_counted % 1000 == 0:

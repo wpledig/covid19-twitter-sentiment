@@ -9,6 +9,10 @@ import tweepy
 import json
 from time import sleep
 
+"""
+Downloads daily CSVs after filtering for only english + US data
+"""
+
 TWEET_BATCH_SIZE = 100
 
 # Eliminates annoying Pandas warning
@@ -79,11 +83,11 @@ def process_file(file, datestring):
             start += TWEET_BATCH_SIZE
             end += TWEET_BATCH_SIZE
 
-    # Filter data by US only
-    print("Saving data for " + datestring)
+    # Filter data-collection by US only
+    print("Saving data-collection for " + datestring)
     filtered_df = df[df['country_code'] == 'US']
     filtered_df = filtered_df[filtered_df['lang'] == 'en']
-    filtered_df.to_csv("us_filtered/{}_US_clean.csv".format(datestring), index=False)
+    filtered_df.to_csv("data/us_filtered/{}_US_clean.csv".format(datestring), index=False)
 
 
 contents = repo.get_contents("dailies")

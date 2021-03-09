@@ -3,6 +3,10 @@ from matplotlib.colors import Normalize
 from mpl_toolkits.basemap import Basemap
 import matplotlib.pyplot as plt
 
+"""
+Plots tweets per city
+"""
+
 input_file = "../exploration/location_data.csv"
 
 df = pd.read_csv(input_file)
