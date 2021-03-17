@@ -6,12 +6,15 @@ import wordcloud
 Creates wordcloud
 """
 
+# Collect and read the twitter terms
 terms_folder = "../data-collection/data/all_term_counts_clean.csv"
 df = pd.read_csv(terms_folder)
 
+# Generate frequency dictionary from terms
 freq_dict = df.set_index('term')['counts'].to_dict()
 print(freq_dict)
 
+# Generate word cloud using the frequency counts
 wordcloud = wordcloud.WordCloud(width=3200, height=1800,
                       background_color='white', max_words=1000,
                       min_font_size=10).generate_from_frequencies(freq_dict)
