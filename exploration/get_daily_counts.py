@@ -7,7 +7,7 @@ import datetime
 Calculates the number of tweets per day and stores in a CSV
 """
 
-daily_counts = defaultdict(int)     #create a dictionary to store the value of the number of tweetw
+daily_counts = defaultdict(int)     #create a dictionary to store the value of the number of tweets
 
 dataset = "../data-collection/data/complete_en_US"      #define a variable for the dataset 
 num_counted = 0         #initialize the number of daily tweets counted to 0
