@@ -2,10 +2,10 @@ from github import Github
 import pandas as pd
 
 """
-n-grams data for each day is already calculated by panacea lab, so this file just compiles those into total counts
+This file compiles daily n-gram counts into total counts
 """
 
-
+# The Github Repo for the original dataset
 g = Github("247e667a9c8eaa6104e840c357e4353ce35065ae")
 repo = g.get_repo("thepanacealab/covid19_twitter")
 
@@ -21,6 +21,7 @@ for daily_folder in contents:
     if daily_folder.type == 'dir':
         sub_contents = repo.get_contents(daily_folder.path)
         for content_file in sub_contents:
+            # Load terms, bigrams, and trigrams data for each day and concatenate them with a running collection of data
             if content_file.name.endswith("terms.csv"):
                 terms_data = pd.read_csv(content_file.download_url, header=None, names=['term', 'counts'])
                 if terms_data.shape[0] == 1001:
@@ -30,11 +31,7 @@ for daily_folder in contents:
                 if grams_data.shape[0] == 1000:
                     grams_result = pd.concat([grams_result, grams_data])
 
-        # print(num_dailies, daily_folder.name)
         num_dailies += 1
-        # 42 -> 43
-        # if num_dailies >= 43:
-        #     break
 
 terms_result = terms_result.astype({'counts': 'int32'})
 terms_result = terms_result.astype({'term': 'str'})
@@ -48,10 +45,11 @@ agg.to_csv("data/all_term_counts_clean.csv", index=False)
 
 agg2 = grams_result.groupby('gram', as_index=False)[['counts']].sum()
 agg2 = agg2.sort_values(by='counts', ascending=False)
-agg2.to_csv("data/all_n_gram_counts_clean.csv",index=False)
+agg2.to_csv("data/all_n_gram_counts_clean.csv", index=False)
 
+# For some reason the "bigrams" files sometimes contain trigrams and vice-versa so we need to filter the grams
+# in these files by length.
 count = agg2['gram'].str.split().str.len()
-
 trigrams = agg2[~(count == 2)]
 bigrams = agg2[~(count == 3)]
 
