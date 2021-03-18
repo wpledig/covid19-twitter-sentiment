@@ -8,8 +8,7 @@ Graphs the three n-grams plots
 
 def make_bar(df, key, end):
     """
-    Creates horizontal bar plot formatted for our three n-grams plots.
-    Inputs are: dataset, part of data used, number of most common n-grams plotted.
+    Creates a horizontal bar plot formatted for an input set of n-grams counts.
 
     :param df: a Dataframe containing columns 'counts' and key
     :param key: the column of df containing the n-grams as a string
