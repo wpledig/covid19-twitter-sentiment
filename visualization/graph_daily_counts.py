@@ -13,15 +13,17 @@ input_file = "../exploration/days_by_counts.csv"
 
 def running_mean(x, N):
     """
-    Function that calculates the running mean of data.
+    Function that calculates the running mean of data. 
+    The inputs are x, the data, and N, the length of the running mean window.
+    The output is the running mean of the input data.
     """
     cumsum = np.cumsum(np.insert(x, 0, 0))
-    return (cumsum[N:] - cumsum[:-N]) / float(N)
+    return (cumsum[N:] - cumsum[:-N]) / float(N) 
 
 
 df = pd.read_csv(input_file, parse_dates=['day'], infer_datetime_format=True)
 plt.figure(figsize=(10, 6))
-mean = running_mean(df['count'].to_numpy(), 7) #Calculate weekly (N = 7 days) running average.
+mean = running_mean(df['count'].to_numpy(), 7) # Calculate weekly (N = 7 days) running average.
 
 # Plotting count, day, and weekly mean. 
 plt.plot(df['day'], df['count'])
