@@ -2,13 +2,19 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 """
-Graphs the three n-grams plots (but doesn't save rn)
+Graphs the three n-grams plots
 """
+
 
 def make_bar(df, key, end):
     """
     Creates horizontal bar plot formatted for our three n-grams plots.
-    Inputs are: dataset, part of data used, number of most common n-grams plotted. 
+    Inputs are: dataset, part of data used, number of most common n-grams plotted.
+
+    :param df: a Dataframe containing columns 'counts' and key
+    :param key: the column of df containing the n-grams as a string
+    :param end: the number of n-grams
+    :return: Nothing.
     """
     # Selecting data to be plotted
     df = df[:end]
@@ -23,6 +29,7 @@ def make_bar(df, key, end):
     plt.xlabel('Number of Appearances')
     plt.title('25 Most Common Terms in Covid-Related Tweets')
     plt.show()
+
 
 # Creating variables for csv files
 terms_folder = "../data-collection/data/all_term_counts_clean.csv"
