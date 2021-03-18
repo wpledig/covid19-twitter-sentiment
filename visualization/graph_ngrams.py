@@ -8,7 +8,8 @@ Graphs the three n-grams plots (but doesn't save rn)
 def make_bar(df, key, end):
     """
     Creates horizontal bar plot formatted for our three n-grams plots.
-    Inputs are: dataset, part of data used, number of most common n-grams plotted. 
+    The inputs are dataset, part of data used, number of most common n-grams plotted. 
+    The output is a figure containing a horizontal bar graph.
     """
     # Selecting data to be plotted
     df = df[:end]
