@@ -13,9 +13,10 @@ input_file = "../exploration/days_by_counts.csv"
 
 def running_mean(x, N):
     """
-    Function that calculates the running mean of data. 
-    The inputs are x, the data, and N, the length of the running mean window.
-    The output is the running mean of the input data.
+    Computes the running average over a sliding window
+    :param x: a Numpy array of input data
+    :param N: the sliding window size
+    :return: the running average of x over a sliding window of size N
     """
     cumsum = np.cumsum(np.insert(x, 0, 0))
     return (cumsum[N:] - cumsum[:-N]) / float(N) 
@@ -35,7 +36,5 @@ plt.xlabel('Date')
 plt.ylabel('Number of Tweets')
 plt.title('Number of English Tweets in the US about COVID-19 per Day')
 
-# plt.xticks(rotation='vertical')
-# plt.locator_params(axis='x', nbins=12)
 plt.savefig('daily_counts.png')
 plt.show()
