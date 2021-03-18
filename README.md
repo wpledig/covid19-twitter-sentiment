@@ -1,4 +1,4 @@
-# PROJECT NAME (TODO)
+# Predicting COVID-19 Infection and Mortality Rates Using Twitter Sentiment
 
 ## Project Description
 Through our project, we will investigate how sentiments expressed about the pandemic on social media interact with public health outcomes, and whether they are an effective predictor of future outcomes.
