@@ -19,7 +19,7 @@ def running_mean(x, N):
     :return: the running average of x over a sliding window of size N
     """
     cumsum = np.cumsum(np.insert(x, 0, 0))
-    return (cumsum[N:] - cumsum[:-N]) / float(N)
+    return (cumsum[N:] - cumsum[:-N]) / float(N) 
 
 
 df = pd.read_csv(input_file, parse_dates=['day'], infer_datetime_format=True)
