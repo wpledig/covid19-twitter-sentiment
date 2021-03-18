@@ -1,14 +1,32 @@
-# DSCI 400 Visualization
+# `visualization`
 
-A collection of images and Python code created to analyze the sentiment of tweets related to COVID-19
+## Description
+This directory contains the code needed to generate exploratory visualizations of the dataset, as well as the visualization
+images themselves.
 
-- graph_daily_counts.py graphs the number of tweets per day + weekly running average
-- graph_ngrams.py graphs three n-gram plots
-- make-wordcloud.py generates a wordCloud with the most frequently used words in the collected tweets
-- plot_city_data.py plots tweets per city on a map of the United States
-- plot_state_data.py plots tweets by state on a map of the United States
+## Usage
+These files can be ran in any order.
+- `graph_daily_counts.py` 
 
-# Examples 
+    Graphs the number of tweets per day as well as a weekly running average.
+
+- `graph_ngrams.py` 
+
+    Plots bar graphs of the counts of the top 25 n-grams in the dataset.
+
+- `make-wordcloud.py` 
+
+    Generates a word cloud with the most frequently used words in the collected tweets.
+
+- `plot_city_data.py` 
+
+    Plots the number of tweets per city on a map of the United States.
+
+- `plot_state_data.py` 
+
+    Creates a heat map of the number of tweets per US state.
+
+## Examples 
 
 ![daily](daily_counts.png?raw=true)
 
