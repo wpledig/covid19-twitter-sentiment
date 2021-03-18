@@ -24,7 +24,8 @@ def running_mean(x, N):
 
 df = pd.read_csv(input_file, parse_dates=['day'], infer_datetime_format=True)
 plt.figure(figsize=(10, 6))
-mean = running_mean(df['count'].to_numpy(), 7) # Calculate weekly (N = 7 days) running average.
+# Calculate weekly (N = 7 days) running average.
+mean = running_mean(df['count'].to_numpy(), 7)
 
 # Plotting count, day, and weekly mean. 
 plt.plot(df['day'], df['count'])
