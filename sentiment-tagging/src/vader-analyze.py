@@ -18,7 +18,7 @@ from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from sklearn.feature_extraction.text import CountVectorizer
 
 sys.path.append(os.path.abspath("../lib"))
-from clean_tweets import *
+from clean_tweets import clean_tweet, stem_tweet
 
 
 positive = 0
@@ -50,5 +50,9 @@ for index, row in df.iterrows():
     cleaned_text = clean_tweet(stripped_text)
     print(cleaned_text)
     print_sentiment(cleaned_text)
+
+    stemmed_tweet = stem_tweet(cleaned_text)
+    print(stemmed_tweet)
+    print_sentiment(stemmed_tweet)
 
     print()
