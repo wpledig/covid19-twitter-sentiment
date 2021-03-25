@@ -21,38 +21,53 @@ sys.path.append(os.path.abspath("../lib"))
 from clean_tweets import clean_tweet, stem_tweet
 
 
-positive = 0
-negative = 0
-neutral = 0
-polarity = 0
+pd.set_option('mode.chained_assignment', None)
+
+
+def init_df(df):
+    df['neg'] = 0.0
+    df['neu'] = 0.0
+    df['pos'] = 0.0
+    df['comp'] = 0.0
+    df['polar'] = 0.0
+    df['subj'] = 0.0
+
 
 nltk.download('vader_lexicon')
-df = pd.read_csv("../../data-collection/data/complete_en_US.csv", encoding='utf8')
+orig_df = pd.read_csv("../../data-collection/data/complete_en_US.csv", encoding='utf8')
+clean_df = pd.read_csv("../../data-collection/data/complete_en_US.csv", encoding='utf8')
+stem_df = pd.read_csv("../../data-collection/data/complete_en_US.csv", encoding='utf8')
+
+init_df(orig_df)
+init_df(clean_df)
+init_df(stem_df)
 
 
-def print_sentiment(text):
+def print_sentiment(df, i, text):
     analysis = TextBlob(text)
     score = SentimentIntensityAnalyzer().polarity_scores(text)
-    neg = score['neg']
-    neu = score['neu']
-    pos = score['pos']
-    comp = score['compound']
-    # polarity += analysis.sentiment.polarity
-    print(score)
-    print(analysis.sentiment)
+    df['neg'][i] = score['neg']
+    df['neu'][i] = score['neu']
+    df['pos'][i] = score['pos']
+    df['comp'][i] = score['compound']
+    df['polar'][i] = analysis.sentiment.polarity
+    df['subj'][i] = analysis.sentiment.subjectivity
 
 
-for index, row in df.iterrows():
+for index, row in orig_df.iterrows():
     stripped_text = row.text[2:-1]
-    print(stripped_text)
-    print_sentiment(stripped_text)
+    print_sentiment(orig_df, index, stripped_text)
 
     cleaned_text = clean_tweet(stripped_text)
-    print(cleaned_text)
-    print_sentiment(cleaned_text)
+    print_sentiment(clean_df, index, cleaned_text)
 
     stemmed_tweet = stem_tweet(cleaned_text)
-    print(stemmed_tweet)
-    print_sentiment(stemmed_tweet)
+    print_sentiment(stem_df, index, stemmed_tweet)
 
-    print()
+    if index % 100 == 0:
+        print("Completed #", index)
+
+print(orig_df)
+orig_df.to_csv("original_tagged.csv", index=False)
+clean_df.to_csv("cleaned_tagged.csv", index=False)
+stem_df.to_csv("stemmed_tagged.csv", index=False)
