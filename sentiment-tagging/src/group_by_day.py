@@ -3,8 +3,10 @@ import pandas as pd
 import datetime
 
 
-def get_daily_avg(input_file, output_file, aggr_func):
-    daily_diff_pos_total = defaultdict(float)
+def get_daily_avg(input_file, output_file, aggr_funcs, aggr_names):
+    daily_aggrs = []
+    for aggr in aggr_funcs:
+        daily_aggrs.append(defaultdict(float))
     daily_counts = defaultdict(int)
 
     num_counted = 0
@@ -17,30 +19,32 @@ def get_daily_avg(input_file, output_file, aggr_func):
 
         # Increment the count of tweets for this date
         daily_counts[cur_date.date()] += 1
-        daily_diff_pos_total[cur_date.date()] += row.pos - row.neg
+        for i in range(len(aggr_funcs)):
+            daily_aggrs[i][cur_date.date()] += aggr_funcs[i](row)
 
         # Print progress update to console
         num_counted += 1
         if num_counted % 1000 == 0:
             print("Counted ", num_counted)
 
-    daily_avg_pos = {}
+    daily_avgs = [{} for i in range(len(aggr_funcs))]
     for day in daily_counts.keys():
-        daily_avg_pos[day] = daily_diff_pos_total[day] / daily_counts[day]
+        for i in range(len(aggr_funcs)):
+            daily_avgs[i][day] = daily_aggrs[i][day] / daily_counts[day]
 
-    print(daily_avg_pos)
+    print(daily_avgs)
 
     # Save counts to CSV
-    df2 = pd.DataFrame.from_dict(daily_avg_pos, orient='index').reset_index()
-    df2.columns = ['day', 'average_pos_diff']
+    df2 = pd.DataFrame(daily_avgs).transpose().reset_index()
+    print(df2)
+    aggr_names.insert(0, 'day')
+    df2.columns = aggr_names
     print(df2)
     df2.to_csv(output_file, index=False)
 
 
-get_pos_diff = lambda x: x.pos - x.neg
-
-get_daily_avg("original_tagged.csv", "original_daily_pos_diff.csv", get_pos_diff)
-get_daily_avg("cleaned_tagged.csv", "cleaned_daily_pos_diff.csv", get_pos_diff)
-get_daily_avg("stemmed_tagged.csv", "stemmed_daily_pos_diff.csv", get_pos_diff)
+get_daily_avg("../textblob_stemmed_tagged.csv", "textblob_dailies.csv",
+              [lambda x: x.polar, lambda x: x.subj],
+              ['polar', 'subj'])
 
 

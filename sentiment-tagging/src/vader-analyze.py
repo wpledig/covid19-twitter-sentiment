@@ -43,7 +43,7 @@ init_df(clean_df)
 init_df(stem_df)
 
 
-def print_sentiment(df, i, text):
+def tag_sentiment(df, i, text):
     analysis = TextBlob(text)
     score = SentimentIntensityAnalyzer().polarity_scores(text)
     df['neg'][i] = score['neg']
@@ -56,13 +56,17 @@ def print_sentiment(df, i, text):
 
 for index, row in orig_df.iterrows():
     stripped_text = row.text[2:-1]
-    print_sentiment(orig_df, index, stripped_text)
+    tag_sentiment(orig_df, index, stripped_text)
+    print(stripped_text)
 
     cleaned_text = clean_tweet(stripped_text)
-    print_sentiment(clean_df, index, cleaned_text)
+    tag_sentiment(clean_df, index, cleaned_text)
+    print(cleaned_text)
 
     stemmed_tweet = stem_tweet(cleaned_text)
-    print_sentiment(stem_df, index, stemmed_tweet)
+    tag_sentiment(stem_df, index, stemmed_tweet)
+    print(stemmed_tweet)
+    print()
 
     if index % 100 == 0:
         print("Completed #", index)
