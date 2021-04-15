@@ -38,7 +38,7 @@ The following steps must be performed, in order, to compile the full dataset we 
     This file was obtained from Panacea Lab's toolkit for processing social media data (https://github.com/thepanacealab/SMMT).
      It takes a variety of 
     command-line arguments (which you can find more about by running it with the `-h` flag), but we recommend running it
-    with the following: `python get_metadata.py -k api_keys.json -i data/complete_filtered_en_US.csv -o data/complete_en_US`
+    with the following: `python get_metadata.py -k api_keys.json -i ../data/complete_filtered_en_US.csv -o ../data/complete_en_US`
     
     Note that this file makes many calls to the Twitter API (which has strict rate-limit rules), so it can take around
     a very long time to finish running.

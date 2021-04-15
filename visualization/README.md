@@ -6,25 +6,33 @@ images themselves.
 
 ## Usage
 These files can be ran in any order.
-- `graph_daily_counts.py` 
+- `src/graph_daily_counts.py` 
 
     Graphs the number of tweets per day as well as a weekly running average.
 
-- `graph_ngrams.py` 
+- `src/graph_ngrams.py` 
 
     Plots bar graphs of the counts of the top 25 n-grams in the dataset.
 
-- `make-wordcloud.py` 
+- `src/make-wordcloud.py` 
 
     Generates a word cloud with the most frequently used words in the collected tweets.
 
-- `plot_city_data.py` 
+- `src/plot_city_data.py` 
 
     Plots the number of tweets per city on a map of the United States.
 
-- `plot_state_data.py` 
+- `src/plot_state_data.py` 
 
     Creates a heat map of the number of tweets per US state.
+    
+- `src/graph_sentiment_vs_cases.py` 
+
+    Plots a graph of VADER sentiment overlayed with COVID-19 infection rate.
+    
+- `src/graph_daily_emotions.py` 
+
+    Creates a graph of weekly averages of emotions relative to their overall average values.
 
 ## Examples 
 
