@@ -8,10 +8,12 @@ from clean_tweets import clean_tweet, stem_tweet
 
 pd.set_option('mode.chained_assignment', None)
 
+# Get the tweet CSVs to process later
 orig_text = pd.read_csv('../../data-collection/data/complete_en_US.csv', encoding='utf8')
 clean_text = pd.read_csv('../../data-collection/data/complete_en_US.csv', encoding='utf8')
 stem_text = pd.read_csv('../../data-collection/data/complete_en_US.csv', encoding='utf8')
 
+# Initialize some new values within each column that represents a given emotion
 def init_df(df):
     df['sad'] = 0.0
     df['angry'] = 0.0
@@ -23,6 +25,7 @@ init_df(orig_text)
 init_df(clean_text)
 init_df(stem_text)
 
+# Analyze a given tweet and push the resulting values into the corresponding columns in the new csv
 def print_sentiment(df, i, text):
     analysis = te.get_emotion(text)
     df['sad'][i] = analysis['Sad']
@@ -31,7 +34,9 @@ def print_sentiment(df, i, text):
     df['surprise'][i] = analysis['Surprise']
     df['happy'][i] = analysis['Happy']
 
+# Loop through all the tweets and process them
 for index, row in orig_text.iterrows():
+    #Obtain the actual tweet from a given row and then process accordingly
     stripped_text = row.text[2:-1]
     print_sentiment(orig_text, index, stripped_text)
 
@@ -41,10 +46,11 @@ for index, row in orig_text.iterrows():
     stemmed_tweet = stem_tweet(cleaned_text)
     print_sentiment(stem_text, index, stemmed_tweet)
 
+    # Keep count of how many tweets have been processed
     if index % 100 == 0:
         print("Completed #", index)
 
-# print(orig_text)
+# Make the new tagged CSVs
 orig_text.to_csv("original_tagged.csv", index=False)
 clean_text.to_csv("cleaned_tagged.csv", index=False)
-stem_text.to_csv("stemmed_vader_tagged.csv", index=False)
+stem_text.to_csv("stemmed_tagged.csv", index=False)
