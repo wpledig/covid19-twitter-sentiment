@@ -1,6 +1,5 @@
 import text2emotion as te
 
-
 # Test tweet simply to help show how text2emotion is used
 text = 'Vacation from COVID in the United States is a fantasy thanks to never-bad-smart-people at the White House.'
 
