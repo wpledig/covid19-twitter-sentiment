@@ -1,46 +1,19 @@
+from time import sleep
 import math
-import sys
-from github import Github
 import wget
 import gzip
 import os
 import pandas as pd
 import tweepy
+import sys
 import json
-from time import sleep
 
-"""
-Downloads daily CSV files from the Panacea Lab dataset after filtering for only english + US data
-"""
+from twitter_api import load_twitter_api
 
-""" Global constant variables """
 # Number of tweets to include in each batch sent to the Twitter API (max is 100)
 TWEET_BATCH_SIZE = 100
-# Date to start collecting daily data from
-START_DATE = '2020-07-26'
 
-# Eliminates annoying Pandas warning
-pd.set_option('mode.chained_assignment', None)
-
-# Information about the GitHub repo for the source dataset
-g = Github("247e667a9c8eaa6104e840c357e4353ce35065ae")
-repo = g.get_repo("thepanacealab/covid19_twitter")
-
-
-# Connect to the Twitter API
-with open('api_keys.json') as f:
-    keys = json.load(f)
-auth = tweepy.OAuthHandler(keys['consumer_key'], keys['consumer_secret'])
-auth.set_access_token(keys['access_token'], keys['access_token_secret'])
-api = tweepy.API(auth, wait_on_rate_limit=True, retry_delay=60 * 3, retry_count=5,
-                 retry_errors=set([401, 404, 500, 503]), wait_on_rate_limit_notify=True)
-
-if api.verify_credentials() == False:
-    print("Your Twitter API credentials are invalid")
-    sys.exit()
-else:
-    print("Your Twitter API credentials are valid.")
-
+api = load_twitter_api('../api_keys.json')
 
 def extract_country_code(tweet):
     """
@@ -104,24 +77,22 @@ def process_file(file, datestring):
     print("Saving data-collection for " + datestring)
     filtered_df = df[df['country_code'] == 'US']
     filtered_df = filtered_df[filtered_df['lang'] == 'en']
-    filtered_df.to_csv("data/us_filtered/{}_US_clean.csv".format(datestring), index=False)
+    filtered_df.to_csv("../data/us_filtered/{}_US_clean.csv".format(datestring), index=False)
 
 
-# Iterate over each folder of daily data in the dataset repository
-contents = repo.get_contents("dailies")
-for daily_folder in contents:
-    if daily_folder.type == 'dir':
-        if daily_folder.name < START_DATE:
-            continue
-        print(daily_folder.name)
-        sub_contents = repo.get_contents(daily_folder.path)
-        for content_file in sub_contents:
-            # Download the clean version of each daily dataset to a temporary file, and then process it
-            # (We ignore "2020-07-21" because the data for that day in the original dataset was collected improperly)
-            if content_file.name.endswith('clean-dataset.tsv.gz') \
-                    and content_file.name != '2020-07-21.json.gz_clean-dataset.tsv.gz':
-                wget.download(content_file.download_url, out='temp.tsv.gz')
-                with gzip.open('temp.tsv.gz', 'rb') as f_in:
-                    process_file(f_in, daily_folder.name)
-                # Deletes the temporary file for this day
-                os.remove("temp.tsv.gz")
+def process_daily_contents(folder_contents, folder_name):
+    """
+    Processes a folder of daily data (from the COVID tweet dataset GitHub)
+    :param folder: a GitHub folder object
+    """
+    print(folder_name)
+    for content_file in folder_contents:
+        # Download the clean version of each daily dataset to a temporary file, and then process it
+        # (We ignore "2020-07-21" because the data for that day in the original dataset was collected improperly)
+        if content_file.name.endswith('clean-dataset.tsv.gz') \
+                and content_file.name != '2020-07-21.json.gz_clean-dataset.tsv.gz':
+            wget.download(content_file.download_url, out='temp.tsv.gz')
+            with gzip.open('temp.tsv.gz', 'rb') as f_in:
+                process_file(f_in, folder_name)
+            # Deletes the temporary file for this day
+            os.remove("temp.tsv.gz")

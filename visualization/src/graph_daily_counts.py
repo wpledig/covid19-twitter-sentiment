@@ -1,26 +1,16 @@
 import pandas as pd
-import datetime
-import numpy as np
 import matplotlib.pyplot as plt
+import sys
+import os
+
+sys.path.append(os.path.abspath("../lib"))
+from plot_utilities import running_mean
 
 """
 Graphs number of tweets per day + weekly running average
 """
 
-
-input_file = "../exploration/days_by_counts.csv"
-
-
-def running_mean(x, N):
-    """
-    Computes the running average over a sliding window
-    :param x: a Numpy array of input data
-    :param N: the sliding window size
-    :return: the running average of x over a sliding window of size N
-    """
-    cumsum = np.cumsum(np.insert(x, 0, 0))
-    return (cumsum[N:] - cumsum[:-N]) / float(N) 
-
+input_file = "../../exploration/data/days_by_counts.csv"
 
 df = pd.read_csv(input_file, parse_dates=['day'], infer_datetime_format=True)
 plt.figure(figsize=(10, 6))
@@ -37,5 +27,5 @@ plt.xlabel('Date')
 plt.ylabel('Number of Tweets')
 plt.title('Number of English Tweets in the US about COVID-19 per Day')
 
-plt.savefig('daily_counts.png')
+plt.savefig('../plots/daily_counts.png')
 plt.show()

@@ -31,7 +31,7 @@ def plot_data(df, field, label):
 
 # orig_df = pd.read_csv("original_daily_compound.csv", parse_dates=['day'], infer_datetime_format=True)
 # clean_df = pd.read_csv("cleaned_daily_compound.csv", parse_dates=['day'], infer_datetime_format=True)
-stem_df = pd.read_csv("stemmed_daily_compound.csv", parse_dates=['day'], infer_datetime_format=True)
+stem_df = pd.read_csv("../data/stemmed_daily_compound.csv", parse_dates=['day'], infer_datetime_format=True)
 # stem_df['sad'] -= stem_df['sad'].mean()
 # stem_df['angry'] -= stem_df['angry'].mean()
 # stem_df['surprise'] -= stem_df['surprise'].mean()

@@ -1,6 +1,7 @@
 
 """
-i didn't write this file, but it's used to hydrate a csv of tweets via command line arguments
+This file is used to hydrate a csv of tweets via command line arguments
+Credit to original authors is given down below and full code can be found at https://github.com/thepanacealab/SMMT
 """
 
 

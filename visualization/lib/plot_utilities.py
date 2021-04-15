@@ -1,12 +1,19 @@
 import matplotlib.pyplot as plt
-import pandas as pd
-
-"""
-Graphs the three n-grams plots
-"""
+import numpy as np
 
 
-def make_bar(df, key, end):
+def running_mean(x, N):
+    """
+    Computes the running average over a sliding window
+    :param x: a Numpy array of input data
+    :param N: the sliding window size
+    :return: the running average of x over a sliding window of size N
+    """
+    cumsum = np.cumsum(np.insert(x, 0, 0))
+    return (cumsum[N:] - cumsum[:-N]) / float(N)
+
+
+def make_ngram_bar(df, key, end):
     """
     Creates a horizontal bar plot formatted for an input set of n-grams counts.
 
@@ -20,29 +27,11 @@ def make_bar(df, key, end):
     plt.figure(figsize=(10, 7))
     plt.barh(range(df.shape[0]), df['counts'])
     plt.ticklabel_format(style='plain')
-    
+
     plt.yticks(range(df.shape[0]), df[key])
     plt.gca().invert_yaxis()
-    
+
     # Creating labels/titles.
     plt.xlabel('Number of Appearances')
     plt.title('25 Most Common Terms in Covid-Related Tweets')
     plt.show()
-
-
-# Creating variables for csv files
-terms_folder = "../data-collection/data/all_term_counts_clean.csv"
-bigrams_folder = "../data-collection/data/all_bigram_counts_clean.csv"
-trigrams_folder = "../data-collection/data/all_trigram_counts_clean.csv"
-
-# Reading in csv files.
-o_df = pd.read_csv(terms_folder)
-b_df = pd.read_csv(bigrams_folder)
-t_df = pd.read_csv(trigrams_folder)
-
-# Creating horizontal bar plots of previous csv files.
-make_bar(o_df, 'term', 25)
-
-make_bar(b_df, 'gram', 25)
-
-make_bar(t_df, 'gram', 25)

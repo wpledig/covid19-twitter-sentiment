@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 Plots tweets per city
 """
 
-input_file = "../exploration/location_data.csv"
+input_file = "../../exploration/data/location_data.csv"
 
 # initialize pandas dataframes for visualization
 df = pd.read_csv(input_file)
@@ -32,5 +32,5 @@ x, y = m(cities["lng"], cities["lat"])
 m.scatter(x, y, s=cities["count"] / 50.0,  alpha=0.5)
 
 plt.title('Number of Tweets about COVID-19 per US City')
-plt.savefig('city_counts.png')
+plt.savefig('../plots/city_counts.png')
 plt.show()

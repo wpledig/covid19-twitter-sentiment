@@ -28,12 +28,12 @@ These files can be ran in any order.
 
 ## Examples 
 
-![daily](daily_counts.png?raw=true)
+![daily](plots/daily_counts.png?raw=true)
 
-![trigrams](trigrams.png?raw=true)
+![trigrams](plots/trigrams.png?raw=true)
 
-![terms](terms.png?raw=true)
+![terms](plots/terms.png?raw=true)
 
-![city](city_counts.png?raw=true)
+![city](plots/city_counts.png?raw=true)
 
-![state](state_counts.png?raw=true)
+![state](plots/state_counts.png?raw=true)

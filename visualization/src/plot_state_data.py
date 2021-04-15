@@ -11,9 +11,8 @@ from matplotlib.patches import Polygon
 Plots tweets by state
 """
 
-
-input_file = "../exploration/location_data.csv"
-pop_file = "../data-collection/data/nst-est2020.csv"
+input_file = "../../exploration/data/location_data.csv"
+pop_file = "../../data-collection/data/nst-est2020.csv"
 
 # Load population data and calculate population by million
 pop_df = pd.read_csv(pop_file)
@@ -68,6 +67,6 @@ cb = plt.colorbar(img)
 
 print(states[["name", "count", "count_by_pop"]])
 
-plt.savefig('state_counts_by_pop.png')
+plt.savefig('../plots/state_counts_by_pop.png')
 plt.show()
 

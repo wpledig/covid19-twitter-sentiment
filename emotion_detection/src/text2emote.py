@@ -47,4 +47,4 @@ for index, row in orig_text.iterrows():
 # print(orig_text)
 orig_text.to_csv("original_tagged.csv", index=False)
 clean_text.to_csv("cleaned_tagged.csv", index=False)
-stem_text.to_csv("stemmed_tagged.csv", index=False)
+stem_text.to_csv("stemmed_vader_tagged.csv", index=False)
