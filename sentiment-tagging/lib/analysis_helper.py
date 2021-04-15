@@ -12,16 +12,19 @@ from clean_tweets import clean_tweet, stem_tweet
 pd.set_option('mode.chained_assignment', None)
 
 
-def init_df(df, fields):
-    for field in fields:
-        df[field] = 0.0
-
-
 def perform_analysis_tagging(input_file, output_file, analysis_func, fields):
+    """
+    Given an inputted CSV of tweets, performs some form of analysis on each tweet and saves the results in a new CSV
+    :param input_file: CSV file where each line contains a tweet in the "text" field
+    :param output_file: CSV file to save tagged data to
+    :param analysis_func: function that takes a string as input and returns an object of values
+    :param fields: a list of fields to save from the object returned from analysis_func
+    """
     stem_df = pd.read_csv(input_file, encoding='utf8')
 
     # Initialize Dataframe fields
-    init_df(stem_df, fields)
+    for field in fields:
+        stem_df[field] = 0.0
 
     # Iterate over all tweets in dataset
     for index, row in stem_df.iterrows():
