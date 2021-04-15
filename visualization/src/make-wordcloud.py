@@ -1,18 +1,20 @@
 import matplotlib.pyplot as plt
 import pandas as pd
 import wordcloud
+import os
 
 """
 Creates wordcloud
 """
 
 # Collect and read the twitter terms
-terms_folder = "../data-collection/data/all_term_counts_clean.csv"
+terms_folder = os.path.join(os.path.dirname(__file__), "../../data-collection/data/all_term_counts_clean.csv")
 df = pd.read_csv(terms_folder)
 
 # Generate frequency dictionary from terms
 freq_dict = df.set_index('term')['counts'].to_dict()
-print(freq_dict)
+# print(freq_dict)
+print("Generating WordCloud...")
 
 # Generate word cloud using the frequency counts
 wordcloud = wordcloud.WordCloud(width=3200, height=1800,
