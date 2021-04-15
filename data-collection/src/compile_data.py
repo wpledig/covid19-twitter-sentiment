@@ -9,7 +9,7 @@ Takes a directory of daily CSV files and combines them into a single CSV
 data_columns = ['tweet_id', 'date', 'time']
 
 # The directory containing CSV files to compile
-filtered_dir = "data/us_filtered"
+filtered_dir = "../data/us_filtered"
 
 compiled_data = pd.DataFrame(columns=data_columns)
 

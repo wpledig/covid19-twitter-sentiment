@@ -1,77 +1,45 @@
 from textblob import TextBlob
 import sys
-import tweepy
-import matplotlib.pyplot as plt
 import pandas as pd
-import numpy as np
 import os
 import nltk
-import pycountry
-import re
-import string
 
-from PIL import Image
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
-# from langdetect import detect
-from nltk.stem import SnowballStemmer
-from nltk.sentiment.vader import SentimentIntensityAnalyzer
-from sklearn.feature_extraction.text import CountVectorizer
 
 sys.path.append(os.path.abspath("../lib"))
 from clean_tweets import clean_tweet, stem_tweet
 
-
 pd.set_option('mode.chained_assignment', None)
 
 
-def init_df(df):
-    df['neg'] = 0.0
-    df['neu'] = 0.0
-    df['pos'] = 0.0
-    df['comp'] = 0.0
-    df['polar'] = 0.0
-    df['subj'] = 0.0
+def init_df(df, fields):
+    for field in fields:
+        df[field] = 0.0
 
 
+# Download VADER lexicon if not saved locally
 nltk.download('vader_lexicon')
-orig_df = pd.read_csv("../../data-collection/data/complete_en_US.csv", encoding='utf8')
-clean_df = pd.read_csv("../../data-collection/data/complete_en_US.csv", encoding='utf8')
 stem_df = pd.read_csv("../../data-collection/data/complete_en_US.csv", encoding='utf8')
 
-init_df(orig_df)
-init_df(clean_df)
-init_df(stem_df)
+# Initialize Dataframe fields
+init_df(stem_df, ['neg', 'neu', 'pos', 'comp', 'polar', 'subj'])
 
-
-def tag_sentiment(df, i, text):
-    analysis = TextBlob(text)
-    score = SentimentIntensityAnalyzer().polarity_scores(text)
-    df['neg'][i] = score['neg']
-    df['neu'][i] = score['neu']
-    df['pos'][i] = score['pos']
-    df['comp'][i] = score['compound']
-    df['polar'][i] = analysis.sentiment.polarity
-    df['subj'][i] = analysis.sentiment.subjectivity
-
-
-for index, row in orig_df.iterrows():
+# Iterate over all tweets in dataset
+for index, row in stem_df.iterrows():
+    # Clean + stem tweet
     stripped_text = row.text[2:-1]
-    tag_sentiment(orig_df, index, stripped_text)
-    print(stripped_text)
-
     cleaned_text = clean_tweet(stripped_text)
-    tag_sentiment(clean_df, index, cleaned_text)
-    print(cleaned_text)
-
     stemmed_tweet = stem_tweet(cleaned_text)
-    tag_sentiment(stem_df, index, stemmed_tweet)
-    print(stemmed_tweet)
-    print()
+
+    # Analyze sentiment with VADER and record scores
+    score = SentimentIntensityAnalyzer().polarity_scores(stemmed_tweet)
+    stem_df['neg'][index] = score['neg']
+    stem_df['neu'][index] = score['neu']
+    stem_df['pos'][index] = score['pos']
+    stem_df['comp'][index] = score['compound']
 
     if index % 100 == 0:
         print("Completed #", index)
 
-print(orig_df)
-orig_df.to_csv("original_tagged.csv", index=False)
-clean_df.to_csv("cleaned_tagged.csv", index=False)
-stem_df.to_csv("stemmed_tagged.csv", index=False)
+# Save analyzed sentiment to CSV
+stem_df.to_csv("../data/stemmed_vader_tagged.csv", index=False)

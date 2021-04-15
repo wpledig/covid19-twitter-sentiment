@@ -45,7 +45,7 @@ for index, row in orig_text.iterrows():
 
     stemmed_tweet = stem_tweet(cleaned_text)
     print_sentiment(stem_text, index, stemmed_tweet)
-    
+
     # Keep count of how many tweets have been processed
     if index % 100 == 0:
         print("Completed #", index)
