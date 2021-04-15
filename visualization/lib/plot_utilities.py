@@ -35,3 +35,26 @@ def make_ngram_bar(df, key, end):
     plt.xlabel('Number of Appearances')
     plt.title('25 Most Common Terms in Covid-Related Tweets')
     plt.show()
+
+
+def plot_avgs(df, plot, field, label, include_daily, include_weekly, include_monthly):
+    """
+    Graphs a range of time-stamped data on a provided graph
+    :param df: source dataframe for the data
+    :param plot: plot object for the graph to be plotted on
+    :param field: field within df to be plotted
+    :param label: label to be used for this data value on the graph
+    :param include_daily: if true, include a plot of daily values for the data field
+    :param include_weekly: if true, include a plot of weekly averages for the data field
+    :param include_monthly: if true, include a plot of monthly averages for the data field
+    """
+    if include_daily:
+        plot.plot(df['day'], df[field], label=label)
+
+    if include_weekly:
+        w_mean = running_mean(df[field].to_numpy(), 7)
+        plot.plot(df['day'][3:-3], w_mean, label=label + " Weekly Average")
+
+    if include_monthly:
+        m_mean = running_mean(df[field].to_numpy(), 30)
+        plot.plot(df['day'][14:-15], m_mean, color='g', label=label + ' Monthly Average')
