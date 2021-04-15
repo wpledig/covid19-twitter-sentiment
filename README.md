@@ -25,7 +25,11 @@ The code for this project is separated into different folders based on function,
     <p>
     Code to aggregate different features of the raw dataset, and the files representing the results of those.
     </p>
-3. `visualization`
+3. `sentiment-tagging`
+    <p>
+    Code to tag tweets with sentiment/emotion values and compute the daily averages of such values.
+    </p>
+4. `visualization`
     <p>
     Code to create visualizations/graphs of the data (and the image files for those visualizations).
     </p>
