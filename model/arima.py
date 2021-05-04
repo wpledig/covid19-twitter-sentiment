@@ -1,3 +1,6 @@
+# arima.py was for calculating the optimal hyperparameters of a given dataset, though it doesn't take into account exogenous variables
+
+
 from statsmodels.tsa.stattools import adfuller
 import pmdarima as pm
 from statsmodels.tsa.arima_model import ARIMA
@@ -40,6 +43,8 @@ print('p-value: %f' % result[1])
 
 #plt.show()
 
+
+#Use the auto calculation of the hyper parameters, feeding it the dataset in place of df
 model = pm.auto_arima(df, start_p=1, start_q=1,
                       test='adf',       # use adftest to find optimal 'd'
                       max_p=3, max_q=3, # maximum p and q
