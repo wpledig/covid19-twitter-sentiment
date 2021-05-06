@@ -9,8 +9,8 @@ import matplotlib.pyplot as plt
 
 #Read in the datasets, in this case the vader results and positivity rates to keep things simple
 pd.set_option('mode.chained_assignment', None)
-us_data = pd.read_csv("data/positivty_rate.csv")
-vader_data = pd.read_csv("data/vader_compound_dailies.csv")
+us_data = pd.read_csv("../exploration/data/positivty_rate.csv")
+vader_data = pd.read_csv("../sentiment-tagging/data/vader_compound_dailies.csv")
 covid_df = us_data["pos_rate"]
 vader_df = vader_data["average_compound"]
 
@@ -31,10 +31,11 @@ exog_df = vader_df.iloc[183:214]
 exog_df = exog_df.reset_index(drop=True)
 vader_df = vader_df.iloc[:183]
 
+
 # Actually make the model with the data extracted above, filling in the training data, training_df, and exogenous variable, vader_df,
 # alongside the optimal hyperparameters gotten from arima.py. These hyperparams are different from (0, 2, 0) b/c we changed from the NYTimes
 # COVID-19 data to COVID-19 positivity rate data
-model = ARIMA(training_df, exog = vader_df, order=(2, 1, 0))
+model = ARIMA(training_df, exog=vader_df, order=(2, 1, 0))
 results = model.fit()
 
 # Use the model to predict the next month's worth of positivity rates, using the rest of the vader_df as the exog var to feed in
