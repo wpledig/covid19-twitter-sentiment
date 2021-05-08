@@ -2,19 +2,25 @@ import numpy as np
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
 import matplotlib.pyplot as plt
+import os
+import sys
 
 
 def get_sentiment():
-    return pd.read_csv("../../sentiment-tagging/data/vader_compound_dailies.csv", parse_dates=['day'], infer_datetime_format=True)
+    return pd.read_csv(os.path.join(os.path.dirname(__file__), "../../sentiment-tagging/data/vader_compound_dailies.csv"),
+                       parse_dates=['day'], infer_datetime_format=True)
 
 
 def get_emotion():
-    return pd.read_csv("../../sentiment-tagging/data/txt2emotion_dailies.csv", parse_dates=['day'], infer_datetime_format=True)
+    return pd.read_csv(os.path.join(os.path.dirname(__file__), "../../sentiment-tagging/data/txt2emotion_dailies.csv"),
+                       parse_dates=['day'], infer_datetime_format=True)
 
 
 def get_positivity_rate():
-    comp_df = pd.read_csv("../../sentiment-tagging/data/vader_compound_dailies.csv", parse_dates=['day'], infer_datetime_format=True)
-    pos_df = pd.read_csv("../../exploration/data/positivity_rate.csv", parse_dates=['date'], infer_datetime_format=True)
+    comp_df = pd.read_csv(os.path.join(os.path.dirname(__file__), "../../sentiment-tagging/data/vader_compound_dailies.csv"),
+                          parse_dates=['day'], infer_datetime_format=True)
+    pos_df = pd.read_csv(os.path.join(os.path.dirname(__file__), "../../exploration/data/positivity_rate.csv"),
+                         parse_dates=['date'], infer_datetime_format=True)
 
     # Trim positivity rate data to Tweet date range
     pos_df = pos_df[pos_df["date"] >= comp_df['day'][0]]
@@ -24,8 +30,8 @@ def get_positivity_rate():
 
 
 def get_day_of_week():
-    comp_df = pd.read_csv("../../sentiment-tagging/data/vader_compound_dailies.csv", parse_dates=['day'],
-                          infer_datetime_format=True)
+    comp_df = pd.read_csv(os.path.join(os.path.dirname(__file__), "../../sentiment-tagging/data/vader_compound_dailies.csv"),
+                          parse_dates=['day'], infer_datetime_format=True)
     days = (comp_df.index.to_numpy() - 1) % 7
     return days.reshape(-1, 1)
 
