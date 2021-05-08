@@ -11,9 +11,11 @@ Creates wordcloud
 terms_folder = os.path.join(os.path.dirname(__file__), "../../data-collection/data/all_term_counts_clean.csv")
 df = pd.read_csv(terms_folder)
 
+# Have to convert term column to string to prevent wordcloud errors
+df['term'] = df['term'].astype(str)
+
 # Generate frequency dictionary from terms
 freq_dict = df.set_index('term')['counts'].to_dict()
-# print(freq_dict)
 print("Generating WordCloud...")
 
 # Generate word cloud using the frequency counts
