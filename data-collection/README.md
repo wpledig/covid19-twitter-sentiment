@@ -4,19 +4,19 @@
 This directory contains all of the code to pull the Panacea Lab dataset from the internet, as well as to perform all
 required data wrangling. 
 
-To avoid the long runtime that this process has, please download the files stored at the link below and put them
-in the `data` folder in your local version of the repository.
-
-The files for the dataset can be found at https://rice.box.com/s/d7r2z48tkrw3q894nr848kwwom1jtsd9
+This process has a very long runtime, but it is against the terms of service of Twitter's API to provide this data in
+our public repository. Please contact us if you would like an expedited download link to the complete dataset.
 
 ## Usage
 
 The following steps must be performed, in order, to compile the full dataset we will be using for this project.
 
-1. Create a file in this directory titled `api_keys.json` that contains your Twitter API credentials.
+1. Create a file in this directory titled `api_keys.json` that contains your Twitter API credentials and a GitHub access 
+    token.
     
     This should be a simple JSON object with the following fields: `consumer_key`, `consumer_secret`, `access_token`, 
-    and `access_token_secret`.
+    and `access_token_secret` for each of the respective Twitter API credentials. Additionally, the field `github_access`
+    should contain a valid GitHub access token capable of viewing public repositories.
     
 2. Run the Python file `src/load_data.py`
 

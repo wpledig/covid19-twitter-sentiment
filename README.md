@@ -1,15 +1,15 @@
-# Predicting COVID-19 Infection and Mortality Rates Using Twitter Sentiment
+# Predicting COVID-19 Infection Rates Using Twitter Sentiment
 
 ## Project Description
-Through our project, we will investigate how sentiments expressed about the pandemic on social media interact with public health outcomes, and whether they are an effective predictor of future outcomes.
+Through this project, we investigated how sentiments expressed about the COVID-19 pandemic on social media interact with public health outcomes, and whether they are an effective predictor of future outcomes.
 
-Our objectives in the project will include:
+Our objectives in the project included:
 
-Sentiment analysis of a large dataset of Twitter posts, ranging across time and space
+- Sentiment analysis of a large dataset of Twitter posts, ranging across time and space
 
-Analysis of how sentiments interact with public health outcomes over time and space, identifying which sentiments correlate with positive outcomes and which sentiments correlate with negative outcomes
+- Analysis of how sentiments interact with public health outcomes over time and space, identifying which sentiments correlate with positive outcomes and which sentiments correlate with negative outcomes
 
-A model which, given sentiment over a time and space, predicts COVID-19 infection and mortality rates
+- A model which, given sentiment over a time and space, predicts COVID-19 infection and mortality rates
 
 ## Usage
 All of the code in this project uses Python 3.
@@ -33,3 +33,9 @@ The code for this project is separated into different folders based on function,
     <p>
     Code to create visualizations/graphs of the data (and the image files for those visualizations).
     </p>
+5. `modeling`
+    <p>
+    Code to create and run models that predict the positivity rate of COVID-19 tests in the US based on Twitter emotion 
+    and sentiment.
+    </p>    
+
