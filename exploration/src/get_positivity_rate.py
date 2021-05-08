@@ -36,6 +36,6 @@ test_df['pos_rate'] = test_df['pos'] / test_df['total']
 
 print(test_df['2020-12-20' < test_df['date']][test_df['date'] < '2020-12-31'])
 
-test_df.to_csv("../data/positivty_rate.csv", index=False)
+test_df.to_csv("../data/positivity_rate.csv", index=False)
 
 
