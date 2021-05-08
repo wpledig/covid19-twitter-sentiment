@@ -23,7 +23,10 @@ START_DATE = '2020-07-26'
 pd.set_option('mode.chained_assignment', None)
 
 # Information about the GitHub repo for the source dataset
-g = Github("247e667a9c8eaa6104e840c357e4353ce35065ae")
+with open('../api_keys.json') as f:
+    keys = json.load(f)
+
+g = Github(keys['github_access'])
 repo = g.get_repo("thepanacealab/covid19_twitter")
 
 # Iterate over each folder of daily data in the dataset repository

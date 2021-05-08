@@ -19,3 +19,8 @@ The code in this section should be run in the following order.
 3. `src/get_daily_counts.py` 
 
     This file calculates the number of tweets per day and stores that information in a CSV file titled `data/days_by_counts.csv`.
+
+4. `src/get_positivity_rate.py` 
+
+    This file calculates the positivity rate of COVID-19 tests for each day based on data from the US Department of Health &
+    Human Services. It then stores these rates in `data/positivity_rate.csv`.
