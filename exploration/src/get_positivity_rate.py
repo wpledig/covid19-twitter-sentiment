@@ -1,41 +1,25 @@
-import json
-from collections import defaultdict
 import pandas as pd
-import matplotlib.pyplot as plt
-import datetime
 
+# Read in the dataset containing COVID-19 testing results by day and location
 df = pd.read_csv('../../data-collection/data/covid_testing_results.csv', parse_dates=['date'], infer_datetime_format=True)
 
-
+# Group dataset values by date and test outcome, summing the total numbers
 agg_df = df.groupby(by=['date', 'overall_outcome']).agg({'new_results_reported': 'sum'}).reset_index()
 
-print(agg_df)
+# Create new dataframe containing the number of positive, negative, and inconclusive tests per day
+rate_df = pd.DataFrame()
+rate_df['date'] = agg_df[agg_df['overall_outcome'] == 'Positive'].reset_index()['date']
+rate_df['pos'] = agg_df[agg_df['overall_outcome'] == 'Positive'].reset_index()['new_results_reported']
+rate_df['neg'] = agg_df[agg_df['overall_outcome'] == 'Negative'].reset_index()['new_results_reported']
+rate_df['inc'] = agg_df[agg_df['overall_outcome'] == 'Inconclusive'].reset_index()['new_results_reported']
 
-# print(agg_df[agg_df['overall_outcome'] == 'Positive'])
+# Sum the total number of tests per day by combining the three outcomes
+rate_df['total'] = rate_df['pos'] + rate_df['neg'] + rate_df['inc']
 
-# TODO: rename this df
-test_df = pd.DataFrame()
+# Calculate positivity rate
+rate_df['pos_rate'] = rate_df['pos'] / rate_df['total']
 
-test_df['date'] = agg_df[agg_df['overall_outcome'] == 'Positive'].reset_index()['date']
-
-test_df['pos'] = agg_df[agg_df['overall_outcome'] == 'Positive'].reset_index()['new_results_reported']
-test_df['neg'] = agg_df[agg_df['overall_outcome'] == 'Negative'].reset_index()['new_results_reported']
-test_df['inc'] = agg_df[agg_df['overall_outcome'] == 'Inconclusive'].reset_index()['new_results_reported']
-
-# test_df = test_df.set_index('date')
-
-test_df['total'] = test_df['pos'] + test_df['neg'] + test_df['inc']
-
-test_df['pos_rate'] = test_df['pos'] / test_df['total']
-
-# plt.figure(figsize=(10, 6))
-# plt.plot(test_df['date'], test_df['pos_rate'])
-# plt.legend()
-# plt.show()
-# print(test_df[test_df['date'] > '2021-03-01'])
-
-print(test_df['2020-12-20' < test_df['date']][test_df['date'] < '2020-12-31'])
-
-test_df.to_csv("../data/positivity_rate.csv", index=False)
+# Save data to CSV
+rate_df.to_csv("../data/positivity_rate.csv", index=False)
 
 
